@@ -6,6 +6,6 @@ class Api::V0::VendorsController < ApplicationController
   end
 
   def not_found(exception)
-    render json: MarketFacade.handle_missing_error(exception), status: :not_found
+    render json: SearchFacade.handle_missing_error(exception), status: :not_found
   end
 end

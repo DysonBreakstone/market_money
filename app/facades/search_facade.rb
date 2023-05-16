@@ -1,4 +1,4 @@
-class MarketFacade
+class SearchFacade
   def self.handle_missing_error(exception)
     {errors: [
       {
