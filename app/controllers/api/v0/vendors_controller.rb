@@ -22,7 +22,15 @@ class Api::V0::VendorsController < ApplicationController
     end
   end
 
+  def update
+    @vendor = Vendor.find(params[:id])
+    if @vendor.update()
+  end
+
   def not_found(exception)
     render json: SearchFacade.handle_missing_error(exception), status: :not_found
   end
+
+  private 
+    def vendor_params
 end
