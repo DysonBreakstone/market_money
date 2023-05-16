@@ -12,10 +12,15 @@ class Api::V0::VendorsController < ApplicationController
   def create
     @vendor = Vendor.new(vendor_params)
     if @vendor.save
-      render json: VendorSerializer.new(Vendor.find(@vendor.id))
+      render json: VendorSerializer.new(Vendor.find(@vendor.id)), status: :created
     else
       render json: { errors: @vendor.errors.full_messages }, status: :bad_request
     end
+  end
+
+  def destroy
+    Vendor.find(params[:id]).destroy
+    render json: {}, status: :no_content
   end
 
   def update
@@ -27,11 +32,13 @@ class Api::V0::VendorsController < ApplicationController
     end
   end
 
-  def not_found(exception)
-    render json: SearchFacade.handle_missing_error(exception), status: :not_found
-  end
-
+  
   private 
+    
+    def not_found(exception)
+      render json: SearchFacade.handle_missing_error(exception), status: :not_found
+    end
+
     def vendor_params
       params.permit(:name, :description, :contact_name, :contact_phone, :credit_accepted)
     end
