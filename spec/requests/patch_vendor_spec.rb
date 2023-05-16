@@ -37,7 +37,7 @@ RSpec.describe "update vendor", type: :request do
     before do
       test_data
     end
-    
+
     it "gives back bad request and fails to update" do
       expect(@vendor_1.name).to eq("Vendor 1")
       expect(@vendor_1.description).to eq("One Vendor")
@@ -50,9 +50,24 @@ RSpec.describe "update vendor", type: :request do
         contact_name: "",
         contact_phone: "(111) 111-1111",
       }
-    json = JSON.parse(response.body, symbolize_names: true)
-    expect(response.status).to eq(400)
-    expect(json[:errors]).to eq(["Name can't be blank", "Contact name can't be blank"])
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(400)
+      expect(json[:errors]).to eq(["Name can't be blank", "Contact name can't be blank"])
+
+      expect(@vendor_1.name).to eq("Vendor 1")
+      expect(@vendor_1.description).to eq("One Vendor")
+      expect(@vendor_1.contact_name).to eq("Contact One")
+      expect(@vendor_1.contact_phone).to eq("(111) 111-1111")
+      expect(@vendor_1.credit_accepted).to eq(true)
+    end
+
+    it "returns 404 when vendor doesn't exist" do
+      patch "/api/v0/vendors/876876876876"
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response.status).to eq(404)
+      expect(json[:errors][0][:detail]).to eq("Couldn't find Vendor with 'id'=876876876876")
     end
   end
 end
