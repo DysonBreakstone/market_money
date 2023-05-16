@@ -11,11 +11,6 @@ class  Api::V0::MarketsController < ApplicationController
   end
 
   def market_not_found(exception)
-    render json: {errors: [
-                    {
-                      detail: exception.message 
-                    }
-                     ]
-                  }, status: :not_found
+    render json: MarketFacade.handle_missing_error(exception), status: :not_found
   end
 end
