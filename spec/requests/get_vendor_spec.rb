@@ -33,6 +33,6 @@ RSpec.describe "Get One Vendor", type: :request do
       expect(response).to have_http_status(:not_found)
       expect(json).to have_key(:errors)
       expect(json[:errors].first[:detail]).to eq("Couldn't find Vendor with 'id'=64738209387")
-    endd
+    end
   end
 end
