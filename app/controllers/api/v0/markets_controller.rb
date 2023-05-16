@@ -10,12 +10,12 @@ class  Api::V0::MarketsController < ApplicationController
     render json: MarketSerializer.new(@market)
   end
 
+  def vendors
+    render json: VendorSerializer.new(Vendor.find_market_vendors(params[:id]))
+  end
+
+
   def market_not_found(exception)
-    render json: {errors: [
-                    {
-                      detail: exception.message 
-                    }
-                     ]
-                  }, status: :not_found
+    render json: SearchFacade.handle_missing_error(exception), status: :not_found
   end
 end
