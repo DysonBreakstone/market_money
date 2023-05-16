@@ -13,15 +13,16 @@ RSpec.describe "market index request", type: :request do
     end
 
     it "shows markets" do
-      expect(@json.size).to eq(5)
-      expect(@json).to all(have_key(:name))
-      expect(@json).to all(have_key(:street))
-      expect(@json).to all(have_key(:city))
-      expect(@json).to all(have_key(:county))
-      expect(@json).to all(have_key(:state))
-      expect(@json).to all(have_key(:zip))
-      expect(@json).to all(have_key(:lat))
-      expect(@json).to all(have_key(:lon))
+      expect(@json[:data].size).to eq(5)
+      expect(@json[:data].first[:attributes]).to have_key(:name)
+      expect(@json[:data].first[:attributes]).to have_key(:street)
+      expect(@json[:data].first[:attributes]).to have_key(:city)
+      expect(@json[:data].first[:attributes]).to have_key(:county)
+      expect(@json[:data].first[:attributes]).to have_key(:state)
+      expect(@json[:data].first[:attributes]).to have_key(:zip)
+      expect(@json[:data].first[:attributes]).to have_key(:lat)
+      expect(@json[:data].first[:attributes]).to have_key(:lon)
+      expect(@json[:data].first[:attributes]).to have_key(:vendor_count)
     end
   end
 end
