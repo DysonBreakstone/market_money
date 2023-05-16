@@ -10,11 +10,7 @@ class Api::V0::VendorsController < ApplicationController
   end
 
   def create
-    @vendor = Vendor.new(name: params[:name],
-                         description: params[:description],
-                         contact_name: params[:contact_name],
-                         contact_phone: params[:contact_phone],
-                         credit_accepted: params[:credit_accepted])
+    @vendor = Vendor.new(vendor_params)
     if @vendor.save
       render json: VendorSerializer.new(Vendor.find(@vendor.id))
     else
@@ -24,7 +20,7 @@ class Api::V0::VendorsController < ApplicationController
 
   def update
     @vendor = Vendor.find(params[:id])
-    if @vendor.update()
+    # if @vendor.update()
   end
 
   def not_found(exception)
@@ -33,4 +29,6 @@ class Api::V0::VendorsController < ApplicationController
 
   private 
     def vendor_params
+      params.permit(:name, :description, :contact_name, :contact_phone, :credit_accepted)
+    end
 end
