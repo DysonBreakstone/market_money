@@ -20,7 +20,7 @@ class Api::V0::VendorsController < ApplicationController
 
   def destroy
     Vendor.find(params[:id]).destroy
-    render json: {}
+    render json: {}, status: :no_content
   end
 
   def update
