@@ -103,7 +103,7 @@ def test_data
   @market_vendor_10 = MarketVendor.create!(vendor_id: @vendor_10.id, market_id: @market_5.id)
   @market_vendor_11 = MarketVendor.create!(vendor_id: @vendor_10.id, market_id: @market_1.id)
   @market_vendor_12 = MarketVendor.create!(vendor_id: @vendor_8.id, market_id: @market_2.id)
-  @market_vendor_13 = MarketVendor.create!(vendor_id: @vendor_6.id, market_id: @market_3.id)
+  @market_vendor_13 = MarketVendor.create!(vendor_id: @vendor_7.id, market_id: @market_3.id)
   @market_vendor_14 = MarketVendor.create!(vendor_id: @vendor_4.id, market_id: @market_4.id)
   @market_vendor_15 = MarketVendor.create!(vendor_id: @vendor_2.id, market_id: @market_5.id)
 end
