@@ -18,6 +18,11 @@ class Api::V0::VendorsController < ApplicationController
     end
   end
 
+  def destroy
+    Vendor.find(params[:id]).destroy
+    render json: {}
+  end
+
   def update
     @vendor = Vendor.find(params[:id])
     if @vendor.update(vendor_params)
@@ -27,11 +32,13 @@ class Api::V0::VendorsController < ApplicationController
     end
   end
 
-  def not_found(exception)
-    render json: SearchFacade.handle_missing_error(exception), status: :not_found
-  end
-
+  
   private 
+    
+    def not_found(exception)
+      render json: SearchFacade.handle_missing_error(exception), status: :not_found
+    end
+
     def vendor_params
       params.permit(:name, :description, :contact_name, :contact_phone, :credit_accepted)
     end
