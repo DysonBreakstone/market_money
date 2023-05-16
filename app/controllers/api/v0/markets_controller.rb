@@ -1,5 +1,5 @@
 class  Api::V0::MarketsController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :market_not_found
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def index
     render json: MarketSerializer.new(Market.all)
@@ -15,7 +15,7 @@ class  Api::V0::MarketsController < ApplicationController
   end
 
 
-  def market_not_found(exception)
+  def not_found(exception)
     render json: SearchFacade.handle_missing_error(exception), status: :not_found
   end
 end

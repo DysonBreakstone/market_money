@@ -34,7 +34,7 @@ RSpec.describe "get all vendors for a market" do
     it "returns expected Vendors" do
       get "/api/v0/markets/982734987234/vendors"
       json = JSON.parse(response.body, symbolize_names: true)
-      expect(response.status).to eq(404)
+      expect(response).to have_http_status(404)
       expect(response).to have_http_status(:not_found)
       expect(json).to have_key(:errors)
       expect(json[:errors].first[:detail]).to eq("Couldn't find Market with 'id'=982734987234")
