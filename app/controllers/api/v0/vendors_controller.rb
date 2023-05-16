@@ -20,7 +20,11 @@ class Api::V0::VendorsController < ApplicationController
 
   def update
     @vendor = Vendor.find(params[:id])
-    # if @vendor.update()
+    if @vendor.update(vendor_params)
+      render json: VendorSerializer.new(@vendor)
+    else
+      render json: { errors: @vendor.errors.full_messages }, status: :bad_request
+    end
   end
 
   def not_found(exception)
