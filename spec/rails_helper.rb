@@ -74,6 +74,8 @@ RSpec.configure do |config|
 end
 
 def test_data
+  Market.destroy_all
+  Vendor.destroy_all
   @market_1 = Market.create!(name: "Market 1", street: "One Street", city: "One City", county: "One County", state: "One State", zip: "11111", lat: "38.9169984", lon: "-77.0320505")
   @market_2 = Market.create!(name: "Market 2", street: "Two Street", city: "Two City", county: "Two County", state: "Two State", zip: "22222", lat: "38.9169984", lon: "-77.0320505")
   @market_3 = Market.create!(name: "Market 3", street: "Three Street", city: "Three City", county: "Three County", state: "Three State", zip: "33333", lat: "38.9169984", lon: "-77.0320505")
