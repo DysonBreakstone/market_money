@@ -5,7 +5,6 @@ class ErrorMarketVendor
     @errors = format_message(market_vendor.errors.full_messages)
     @status = determine_status
     @code = determine_code
-    # require 'pry'; binding.pry
   end
 
   def format_message(message)
@@ -21,12 +20,10 @@ class ErrorMarketVendor
   end
 
   def determine_code
-    # require 'pry'; binding.pry
     if @status == "Unprocessable Content"
-      # require 'pry'; binding.pry
-      return 422
+      422
     else
-      return 404
+      404
     end
   end
 end
