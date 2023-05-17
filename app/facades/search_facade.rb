@@ -7,4 +7,14 @@ class SearchFacade
        ]
     }
   end
+
+  def self.handle_missing_mv_error(exception)
+    require 'pry'; binding.pry
+    {errors: [
+      {
+        detail:
+      }
+       ]
+    }
+  end
 end

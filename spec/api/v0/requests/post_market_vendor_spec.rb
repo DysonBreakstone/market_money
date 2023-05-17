@@ -16,6 +16,7 @@ RSpec.describe "post market_vendor", type: :request do
         vendor_id: @vendor_3.id
       }
       json = JSON.parse(response.body, symbolize_names: true)
+      expect(response).to have_http_status(201)
       @market_5.reload
       @vendor_3.reload
       
@@ -42,7 +43,7 @@ RSpec.describe "post market_vendor", type: :request do
       expect(json[:errors]).to eq(["Validation failed: Market vendor association between market with market_id=#{@market_5.id} and vendor_id=#{@vendor_2.id} already exists"])
     end
 
-    it "id is missing" do
+    it "vendor id is missing" do
       post "/api/v0/market_vendors", params: {
         market_id: @market_5.id,
         vendor_id: ""
@@ -51,6 +52,17 @@ RSpec.describe "post market_vendor", type: :request do
 
       expect(response).to have_http_status(404)
       expect(json[:errors]).to eq(["Validation failed: Vendor must exist"])
+    end
+
+    it "market id is missing" do
+      post "/api/v0/market_vendors", params: {
+        market_id: "",
+        vendor_id: @vendor_2.id
+      }
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(404)
+      expect(json[:errors]).to eq(["Validation failed: Market must exist"])
     end
   end
 end
