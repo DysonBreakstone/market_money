@@ -34,6 +34,10 @@ class  Api::V0::MarketsController < ApplicationController
     end
   end
 
+  def nearby_atms
+    render json:AtmSerializer.new(Market.find(params[:id]).nearby_atms)
+  end
+
   private
    def search_params
     params.permit(:city, :state, :name, :market)
