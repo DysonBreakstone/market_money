@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.desribe "Market Search", type: :request do
+RSpec.describe "Market Search", type: :request do
   describe "Happy Path" do
     before do 
       test_data
-      @market_11 = Market.create!(name: "Market 11", street: "One Street", city: "One City", county: "One County", state: "One State", zip: "11111", lat: "38.9169984", lon: "-77.0320505")
+      @market_11 = Market.create!(name: "Market 11", street: "One Street", city: "Eleven City", county: "One County", state: "One State", zip: "11111", lat: "38.9169984", lon: "-77.0320505")
       @market_12 = Market.create!(name: "Market 12", street: "Two Street", city: "Two City", county: "Two County", state: "Two State", zip: "22222", lat: "38.9169984", lon: "-77.0320505")
     end
 
@@ -23,8 +23,7 @@ RSpec.desribe "Market Search", type: :request do
 
         expect(response).to have_http_status(200)
         expect(json[:data]).to be_a(Array)
-        expect(json[:data].count).to eq(5)
-        require 'pry'; binding.pry
+        expect(json[:data].count).to eq(7)
       end
     end
 
@@ -34,7 +33,7 @@ RSpec.desribe "Market Search", type: :request do
 
       expect(json[:data].count).to eq(2)
 
-      get "/api/v0/markets/search", params: {state: "One", name: 11}
+      get "/api/v0/markets/search", params: {state: "One", city: "Eleven"}
       json = JSON.parse(response.body, symbolize_names: true)
 
       expect(json[:data].count).to eq(1)
@@ -44,7 +43,7 @@ RSpec.desribe "Market Search", type: :request do
       get "/api/v0/markets/search", params: {state: "Three"}
       json = JSON.parse(response.body, symbolize_names: true)
 
-      expect(json).to have_key([:data])
+      expect(json).to have_key(:data)
       expect(json[:data]).to be_a(Array)
     end
   end
@@ -59,27 +58,33 @@ RSpec.desribe "Market Search", type: :request do
         i_params = [
           {city: "City"},
           {city: "City", name: "Market"},
-          {name: "Market", city: "City"},
-          {zip: "11111"},
-          {lat: "38.9169984"},
-          {lon: "-77.0320505"},
-          {fake_param: "Fake Data"}
+          {name: "Market", city: "City"}
           ]
         i_params.each do |param|
           get "/api/v0/markets/search", params: param
           json = JSON.parse(response.body, symbolize_names: true)
 
           expect(response).to have_http_status(422)
-          expect(json[:errors]).to eq(["Search parameters must be some combination of City, State, and Name. City by itself, or City and Name without an associated State will not suffice."])
+          expect(json[:errors].first[:detail]).to eq(["Search parameters must be some combination of City, State, and Name. City by itself, or City and Name without an associated State will not suffice."])
         end  
+      end
         
       it "valid params but no markets" do
-        get "/api/v0/markets/search", params: {state: "Flurb"}
-        json = JSON.parse(response.body, symbolize_names: true)
+        wacky_params = [
+          {zip: "11111"},
+          {lat: "38.9169984"},
+          {lon: "-77.0320505"},
+          {fake_param: "Fake Data"},
+          {state: "Flurb"}
+        ]
+        wacky_params.each do |param|
+          get "/api/v0/markets/search", params: param
+          json = JSON.parse(response.body, symbolize_names: true)
 
-        expect(response).to have_http_status(200)
-        expect(json).to have_key(:data)
-        expect(json[:data]).to eq([])
+          expect(response).to have_http_status(200)
+          expect(json).to have_key(:data)
+          expect(json[:data]).to eq([])
+        end
       end
     end
   end

@@ -8,11 +8,10 @@ class SearchFacade
     }
   end
 
-  def self.handle_missing_mv_error(exception)
-    require 'pry'; binding.pry
+  def self.handle_bad_market_search
     {errors: [
       {
-        detail:
+        detail: ["Search parameters must be some combination of City, State, and Name. City by itself, or City and Name without an associated State will not suffice."]
       }
        ]
     }
