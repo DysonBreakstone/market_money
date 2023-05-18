@@ -58,23 +58,26 @@ RSpec.describe "Market Search", type: :request do
         i_params = [
           {city: "City"},
           {city: "City", name: "Market"},
-          {name: "Market", city: "City"}
+          {name: "Market", city: "City"},
+          {lat: "38.9169984"},
+          {zip: "11111"},
+          {lat: "38.9169984"},
+          {lon: "-77.0320505"},
+          {fake_param: "Fake Data"}
           ]
         i_params.each do |param|
           get "/api/v0/markets/search", params: param
           json = JSON.parse(response.body, symbolize_names: true)
 
           expect(response).to have_http_status(422)
-          expect(json[:errors].first[:detail]).to eq(["City by itself, or City and Name without an associated State are not valid search parameters."])
+          expect(json[:errors].first[:detail]).to eq(["Search parameters must be some combination of City, State, and Name. City by itself, or City and Name without an associated State will not suffice."])
         end  
       end
         
       it "valid params but no markets" do
         wacky_params = [
-          {zip: "11111"},
-          {lat: "38.9169984"},
-          {lon: "-77.0320505"},
-          {fake_param: "Fake Data"},
+          {},
+          {city: "City", state: "Banana"},
           {state: "Flurb"}
         ]
         wacky_params.each do |param|
