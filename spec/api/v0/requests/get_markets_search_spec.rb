@@ -58,12 +58,7 @@ RSpec.describe "Market Search", type: :request do
         i_params = [
           {city: "City"},
           {city: "City", name: "Market"},
-          {name: "Market", city: "City"},
-          {lat: "38.9169984"},
-          {zip: "11111"},
-          {lat: "38.9169984"},
-          {lon: "-77.0320505"},
-          {fake_param: "Fake Data"}
+          {name: "Market", city: "City"}
           ]
         i_params.each do |param|
           get "/api/v0/markets/search", params: param
@@ -78,7 +73,12 @@ RSpec.describe "Market Search", type: :request do
         wacky_params = [
           {},
           {city: "City", state: "Banana"},
-          {state: "Flurb"}
+          {state: "Flurb"},
+          {lat: "38.9169984"},
+          {zip: "11111"},
+          {lat: "38.9169984"},
+          {lon: "-77.0320505"},
+          {fake_param: "Fake Data"}
         ]
         wacky_params.each do |param|
           get "/api/v0/markets/search", params: param
