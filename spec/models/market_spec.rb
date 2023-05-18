@@ -62,4 +62,22 @@ RSpec.describe Market, type: :model do
       expect(Market.find_markets("1", "City", nil)).to eq(false)
     end
   end
+
+  describe "isntace methods" do
+    before do
+      test_data
+    end
+
+    it "nearby_atms" do
+      keys_array = [:address, :distance, :id, :lat, :lon, :name]
+      atms = @market_1.nearby_atms
+      distances = atms.map{|atm| atm.distance}
+      expect(atms.length).to eq(10)
+      keys_array.each do |key|
+        expect(atms).to all(be_a(Atm))
+      end
+      expect(distances).to eq(distances.sort)
+    end
+
+  end
 end
