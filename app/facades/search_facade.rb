@@ -11,7 +11,7 @@ class SearchFacade
   def self.handle_bad_market_search
     {errors: [
       {
-        detail: ["Search parameters must be some combination of City, State, and Name. City by itself, or City and Name without an associated State will not suffice."]
+        detail: ["City by itself, or City and Name without an associated State are not valid search parameters."]
       }
        ]
     }

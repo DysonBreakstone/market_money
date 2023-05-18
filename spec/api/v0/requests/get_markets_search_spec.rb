@@ -65,7 +65,7 @@ RSpec.describe "Market Search", type: :request do
           json = JSON.parse(response.body, symbolize_names: true)
 
           expect(response).to have_http_status(422)
-          expect(json[:errors].first[:detail]).to eq(["Search parameters must be some combination of City, State, and Name. City by itself, or City and Name without an associated State will not suffice."])
+          expect(json[:errors].first[:detail]).to eq(["City by itself, or City and Name without an associated State are not valid search parameters."])
         end  
       end
         
