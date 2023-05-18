@@ -25,4 +25,13 @@ class Market < ApplicationRecord
       return false if !city.nil? && state.nil?
       true
     end
+
+    def nearby_atms
+      atms = []
+      atm_json = TomTomService.nearby_atms(lat, lon)
+      atm_json[:results].each do |atm_data|
+        atms << Atm.new(atm_data)
+      end
+      atms
+    end
 end

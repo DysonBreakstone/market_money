@@ -13,7 +13,7 @@ class Api::V0::MarketVendorsController < ApplicationController
     @market_vendor = MarketVendor.find_by(market_id: params[:market_id], vendor_id: params[:vendor_id])
     if @market_vendor
       MarketVendor.find(@market_vendor.id).destroy
-      render json: {}, status: :no_content
+      render json: {}, status: 204
     else
       error_market_vendor = ErrorMarketVendor.new(MarketVendor.new(market_id: params[:market_id], vendor_id: params[:vendor_id]))
       render json: error_market_vendor, status: error_market_vendor.code
