@@ -9,7 +9,7 @@ RSpec.describe "get nearby atms", type: :request do
     it "gets atms" do
       data_keys = [:id, :type, :attributes]
       attr_keys = [:name, :address, :lat, :lon, :distance]
-      get "/api/v0/markets/#{@market_1.id}/nearest_atms"
+      get "/api/v0/markets/#{@market_1.id}/nearest_atm"
       json = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(200)
@@ -34,7 +34,7 @@ RSpec.describe "get nearby atms", type: :request do
 
     it "returns empty" do
       @market_80 = Market.create!(name: "Market 1", street: "One Street", city: "One City", county: "One County", state: "One State", zip: "11111", lat: "90", lon: "135")
-      get "/api/v0/markets/#{@market_80.id}/nearest_atms"
+      get "/api/v0/markets/#{@market_80.id}/nearest_atm"
       json = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(200)
@@ -42,7 +42,7 @@ RSpec.describe "get nearby atms", type: :request do
     end
 
     it "non-existent market" do
-      get "/api/v0/markets/5151848451518484/nearest_atms"
+      get "/api/v0/markets/5151848451518484/nearest_atm"
       json = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to have_http_status(404)
