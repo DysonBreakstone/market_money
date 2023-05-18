@@ -22,7 +22,11 @@ class  Api::V0::MarketsController < ApplicationController
   def search
     result = Market.find_markets(search_params[:name], search_params[:city], search_params[:state])
     if result
-      render json: MarketSerializer.new(result), status: 200
+      if search_params.empty?
+        render json: SearchFacade.handle_empty_results, status: 200
+      else
+        render json: MarketSerializer.new(result), status: 200
+      end
     else
       render json: SearchFacade.handle_bad_market_search, status: 422
     end
@@ -30,6 +34,6 @@ class  Api::V0::MarketsController < ApplicationController
 
   private
    def search_params
-    params.permit(:city, :state, :params)
+    params.permit(:city, :state, :name)
    end
 end

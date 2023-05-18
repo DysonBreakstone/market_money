@@ -16,4 +16,8 @@ class SearchFacade
        ]
     }
   end
+
+  def self.handle_empty_results
+    {data: []}
+  end
 end
