@@ -18,4 +18,22 @@ class  Api::V0::MarketsController < ApplicationController
   def not_found(exception)
     render json: SearchFacade.handle_missing_error(exception), status: :not_found
   end
+
+  def search
+    result = Market.find_markets(search_params[:name], search_params[:city], search_params[:state])
+    if result
+      if search_params.empty?
+        render json: SearchFacade.handle_empty_results, status: 200
+      else
+        render json: MarketSerializer.new(result), status: 200
+      end
+    else
+      render json: SearchFacade.handle_bad_market_search, status: 422
+    end
+  end
+
+  private
+   def search_params
+    params.permit(:city, :state, :name)
+   end
 end
