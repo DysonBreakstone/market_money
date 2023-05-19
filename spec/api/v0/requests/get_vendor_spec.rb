@@ -35,4 +35,30 @@ RSpec.describe "Get One Vendor", type: :request do
       expect(json[:errors].first[:detail]).to eq("Couldn't find Vendor with 'id'=64738209387")
     end
   end
+
+  describe "advanced active record" do
+    before do
+      test_data
+    end
+
+    it "returns state_sold_in attribute" do
+      get "/api/v0/vendors/#{@vendor_2.id}"
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(200)
+      expect(json[:data][:attributes]).to have_key(:states_sold_in)
+      expect(json[:data][:attributes][:states_sold_in]).to eq([@market_1.state, @market_5.state])
+    end
+
+    it "still returns an array even if only one state" do
+      @market_vendor_15.destroy
+
+      get "/api/v0/vendors/#{@vendor_2.id}"
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to have_http_status(200)
+      expect(json[:data][:attributes]).to have_key(:states_sold_in)
+      expect(json[:data][:attributes][:states_sold_in]).to eq([@market_1.state])
+    end
+  end
 end

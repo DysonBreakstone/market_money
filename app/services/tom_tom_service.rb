@@ -8,7 +8,6 @@ class TomTomService
   end
 
   def self.nearby_atms(lat, lon)
-    # require 'pry'; binding.pry
     response = conn.get("/search/2/nearbySearch/.json?key=#{ENV["tomtom_api_key"]}&lat=#{lat}&lon=#{lon}&key=#{ENV["tomtom_api_key"]}")
     JSON.parse(response.body, symbolize_names: true)
   end
