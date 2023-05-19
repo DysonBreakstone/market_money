@@ -32,6 +32,11 @@ class Api::V0::VendorsController < ApplicationController
     end
   end
 
+  def multiple_states
+    results = Vendor.many_states
+    render json: VendorSerializer.new(results).serializable_hash.merge(results: results.count)
+  end
+
   
   private 
     

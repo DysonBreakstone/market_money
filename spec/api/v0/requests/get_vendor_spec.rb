@@ -47,7 +47,7 @@ RSpec.describe "Get One Vendor", type: :request do
 
       expect(response).to have_http_status(200)
       expect(json[:data][:attributes]).to have_key(:states_sold_in)
-      expect(json[:data][:attributes][:states_sold_in]).to eq([@market_1.state, @market_5.state])
+      expect(json[:data][:attributes][:states_sold_in]).to eq([@market_5.state, @market_1.state])
     end
 
     it "still returns an array even if only one state" do

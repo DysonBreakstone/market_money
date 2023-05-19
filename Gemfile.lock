@@ -98,6 +98,7 @@ GEM
       thor (>= 0.14.0, < 2)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    hirb (0.7.3)
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -227,6 +228,7 @@ DEPENDENCIES
   debug
   faraday
   figaro
+  hirb
   jsonapi-serializer
   launchy
   orderly

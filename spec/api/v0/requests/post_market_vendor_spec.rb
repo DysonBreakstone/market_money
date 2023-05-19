@@ -17,6 +17,7 @@ RSpec.describe "post market_vendor", type: :request do
       }
       json = JSON.parse(response.body, symbolize_names: true)
       expect(response).to have_http_status(201)
+      require 'pry'; binding.pry
       @market_5.reload
       @vendor_3.reload
       
