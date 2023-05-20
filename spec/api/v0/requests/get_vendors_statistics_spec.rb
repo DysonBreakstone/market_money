@@ -61,12 +61,12 @@ RSpec.describe "vendor statistics" do
 
   describe "most popular states" do
     before do
-      @market_1 = Market.create!(name: "Market 1", street: "One Street", city: "One City", county: "One County", state: "Two State", zip: "11111", lat: "38.9169984", lon: "-77.0320505")
-      @market_2 = Market.create!(name: "Market 2", street: "Two Street", city: "Two City", county: "Two County", state: "One State", zip: "22222", lat: "38.9169984", lon: "-77.0320505")
+      @market_1 = Market.create!(name: "Market 1", street: "One Street", city: "One City", county: "One County", state: "One State", zip: "11111", lat: "38.9169984", lon: "-77.0320505")
+      @market_2 = Market.create!(name: "Market 2", street: "Two Street", city: "Two City", county: "Two County", state: "Two State", zip: "22222", lat: "38.9169984", lon: "-77.0320505")
       @market_3 = Market.create!(name: "Market 3", street: "Three Street", city: "Three City", county: "Three County", state: "Three State", zip: "33333", lat: "38.9169984", lon: "-77.0320505")
       @market_4 = Market.create!(name: "Market 4", street: "Four Street", city: "Four City", county: "Four County", state: "Four State", zip: "44444", lat: "38.9169984", lon: "-77.0320505")
       @market_5 = Market.create!(name: "Market 5", street: "Five Street", city: "Five City", county: "Five County", state: "Five State", zip: "55555", lat: "38.9169984", lon: "-77.0320505")
-      @market_5 = Market.create!(name: "Market 6", street: "Six Street", city: "Six City", county: "Six County", state: "Six State", zip: "66666", lat: "38.9169984", lon: "-77.0320505")
+      @market_6 = Market.create!(name: "Market 6", street: "Six Street", city: "Six City", county: "Six County", state: "Six State", zip: "66666", lat: "38.9169984", lon: "-77.0320505")
 
       @vendor_1 = Vendor.create!(name: "Vendor 1", description: "One Vendor", contact_name: "Contact One", contact_phone: "(111) 111-1111", credit_accepted: true)
       @vendor_2 = Vendor.create!(name: "Vendor 2", description: "Two Vendor", contact_name: "Contact Two", contact_phone: "(222) 222-2222", credit_accepted: false)
@@ -102,16 +102,16 @@ RSpec.describe "vendor statistics" do
       expect(json[:data]).to all(have_key(:state))
       expect(json[:data]).to all(have_key(:number_of_vendors))
       expect(json[:data].count).to eq(5)
-      expect(json[:data].first[:state]).to eq("One State")
-      expect(json[:data].first[:state]).to eq("Two State")
-      expect(json[:data].first[:state]).to eq("Five State")
-      expect(json[:data].first[:state]).to eq("One State")
-      expect(json[:data].first[:state]).to eq("Four State")
-      expect(json[:data].first[:number_of_vendors]).to eq(5)
-      expect(json[:data].first[:number_of_vendors]).to eq(4)
-      expect(json[:data].first[:number_of_vendors]).to eq(3)
-      expect(json[:data].first[:number_of_vendors]).to eq(2)
-      expect(json[:data].first[:number_of_vendors]).to eq(1)
+      expect(json[:data][0][:state]).to eq("Three State")
+      expect(json[:data][1][:state]).to eq("Two State")
+      expect(json[:data][2][:state]).to eq("Five State")
+      expect(json[:data][3][:state]).to eq("One State")
+      expect(json[:data][4][:state]).to eq("Four State")
+      expect(json[:data][0][:number_of_vendors]).to eq(5)
+      expect(json[:data][1][:number_of_vendors]).to eq(4)
+      expect(json[:data][2][:number_of_vendors]).to eq(3)
+      expect(json[:data][3][:number_of_vendors]).to eq(2)
+      expect(json[:data][4][:number_of_vendors]).to eq(1)
     end
 
     it "has limit parameter" do

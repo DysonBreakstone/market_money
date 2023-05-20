@@ -37,6 +37,11 @@ class Api::V0::VendorsController < ApplicationController
     render json: VendorSerializer.new(results).serializable_hash.merge(results: results.count)
   end
 
+  def popular_states
+    yams = Vendor.states_by_popularity(params[:limit])
+    render json: yams
+  end
+
   
   private 
     

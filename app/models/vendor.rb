@@ -26,5 +26,23 @@ class Vendor < ApplicationRecord
     Vendor.joins(:markets).select("vendors.id as vendor, COUNT(markets.state) AS state_count").group("vendors.id")
   end
 
+  def self.state_count_table
+    Vendor.joins(:markets).select("markets.state AS state, COUNT(vendors.id) AS vendor_count").group("markets.state")
+  end
+
+  def self.states_by_popularity(total)
+    subquery = state_count_table
+    total ? limit = total : subquery.size
+    states = {data: []}
+    brent = Vendor.from(subquery, :state_count)
+      .select("state_count.state, state_count.vendor_count")
+      .order("state_count.vendor_count DESC")
+      .limit(limit)
+      .each do |vendor| 
+        states[:data] << { state: vendor.state, number_of_vendors: vendor.vendor_count } 
+      end
+    states
+  end
+
 
 end
