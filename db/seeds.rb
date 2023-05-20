@@ -15,8 +15,8 @@ system(cmd)
 Market.destroy_all
 Vendor.destroy_all
 
-@market_1 = Market.create!(name: "Market 1", street: "One Street", city: "One City", county: "One County", state: "Two State", zip: "11111", lat: "38.9169984", lon: "-77.0320505")
-@market_2 = Market.create!(name: "Market 2", street: "Two Street", city: "Two City", county: "Two County", state: "One State", zip: "22222", lat: "38.9169984", lon: "-77.0320505")
+@market_1 = Market.create!(name: "Market 1", street: "One Street", city: "One City", county: "One County", state: "One State", zip: "11111", lat: "38.9169984", lon: "-77.0320505")
+@market_2 = Market.create!(name: "Market 2", street: "Two Street", city: "Two City", county: "Two County", state: "Two State", zip: "22222", lat: "38.9169984", lon: "-77.0320505")
 @market_3 = Market.create!(name: "Market 3", street: "Three Street", city: "Three City", county: "Three County", state: "Three State", zip: "33333", lat: "38.9169984", lon: "-77.0320505")
 @market_4 = Market.create!(name: "Market 4", street: "Four Street", city: "Four City", county: "Four County", state: "Four State", zip: "44444", lat: "38.9169984", lon: "-77.0320505")
 @market_5 = Market.create!(name: "Market 5", street: "Five Street", city: "Five City", county: "Five County", state: "Five State", zip: "55555", lat: "38.9169984", lon: "-77.0320505")
