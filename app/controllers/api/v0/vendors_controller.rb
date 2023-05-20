@@ -42,6 +42,10 @@ class Api::V0::VendorsController < ApplicationController
     render json: yams
   end
 
+  def popularity_by_state
+    render json: VendorSerializer.new(Vendor.most_popular_vendor_by_state(params[:state]))
+  end
+
   
   private 
     

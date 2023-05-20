@@ -43,5 +43,13 @@ class Vendor < ApplicationRecord
     states
   end
 
+  def self.most_popular_vendor_by_state(state)
+    Vendor.joins(:markets)
+      .where("markets.state='#{state}'")
+      .joins(:market_vendors)
+      .select("vendors.* AS vendor, COUNT(market_vendors.*) AS market_count")
+      .group("vendors.id")
+      .order("market_count DESC")
+  end
 
 end
